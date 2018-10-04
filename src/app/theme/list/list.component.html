@@ -1,0 +1,43 @@
+<swal #copy title="コードをコピーしました" type="success" timer="1500" [focusCancel]="true" [showConfirmButton]="false"></swal>
+
+<div class="container py-3">
+
+  <section class="section">
+    <h2>テーマ一覧</h2>
+  </section>
+
+  <section class="section">
+    <div class="theme-previews row">
+      <ng-template ngFor let-data [ngForOf]="list">
+        <div class="col-md-4 py-2">
+          <div class="col-12 theme-preview-post" [style.background-color]="data.vars.secondary">
+            <div class="mb-2 row">
+              <div class="col-3">
+                <div class="theme-preview-icon my-3" [style.background-color]="data.vars.primary"></div>
+              </div>
+              <div class="col-9">
+                <div class="mt-1" [style.color]="data.vars.primary">{{data.name}}</div>
+                <div class="theme-preview-body" [style.color]="data.vars.text">
+                  <ul class="list-unstyled">
+                    <li>テーマを作った人:</li>
+                    <li>{{data.author}}</li>
+                    <hr [style.border-color]="data.vars.text">
+                    <li>テーマの説明:</li>
+                    <li>{{data.desc}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-block"
+                  [style.background-color]="data.vars.primary"
+                  [style.color]="data.vars.text"
+                  ngxClipboard
+                  (click)="copy.show()"
+                  [cbContent]="data | json">テーマコードをコピー</button>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,17 @@
+<swal #addSuccess title="テーマを共有しました" type="success" timer="1500" [focusCancel]="true" [showConfirmButton]="false"></swal>
+
+
+<div class="py-5 text-center text-white" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url(/assets/img/bg1.jpg);  background-position: center center, center center;  background-size: cover, cover;  background-repeat: repeat, repeat;" >
+  <div class="container py-5">
+    <div class="row py-5">
+      <div class="mx-auto col-md-7 p-4 py-5">
+        <h1 class="text-light">テーマの共有</h1>
+        <p class="mb-4 lead text-light">あなたが作成した最高のテーマを他のミスキストにも共有しましょう！</p>
+        <form>
+          <textarea class="form-control my-3" id="form26" rows="3" placeholder="ここにテーマのコードを貼り付けてください" (input)="code = $event.target.value"></textarea>
+          <button type="button" class="btn btn-primary btn-block" (click)="submit()" [disabled]="!code">共有</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
