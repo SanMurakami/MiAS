@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {SwalComponent} from '@toverux/ngx-sweetalert2';
+import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -9,7 +9,7 @@ import {SwalComponent} from '@toverux/ngx-sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  @ViewChild('copy') private copy: SwalComponent;
+  @ViewChild('copy', { static: true }) private copy: SwalComponent;
   list = [];
   constructor(
     private httpClient: HttpClient
