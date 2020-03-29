@@ -9,7 +9,7 @@ import {SwalComponent} from '@toverux/ngx-sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  @ViewChild('copy') private copy: SwalComponent;
+  @ViewChild('copy', { static: true }) private copy: SwalComponent;
   list = [];
   constructor(
     private httpClient: HttpClient

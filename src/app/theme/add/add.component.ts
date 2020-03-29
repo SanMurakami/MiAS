@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  @ViewChild('addSuccess') private addSuccess: SwalComponent;
+  @ViewChild('addSuccess', { static: true }) private addSuccess: SwalComponent;
   code: any;
   constructor(
     private httpClient: HttpClient,
