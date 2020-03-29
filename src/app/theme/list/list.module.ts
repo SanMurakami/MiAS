@@ -5,7 +5,7 @@ import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';
 import {ClipboardModule} from 'ngx-clipboard';
 import {HttpClientModule} from '@angular/common/http';
-import {SweetAlert2Module} from '@toverux/ngx-sweetalert2';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   imports: [

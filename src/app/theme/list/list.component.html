@@ -1,4 +1,4 @@
-<swal #copy title="コードをコピーしました" type="success" timer="1500" [focusCancel]="true" [showConfirmButton]="false"></swal>
+<swal #copy title="コードをコピーしました" icon="success" timer="1500" [focusCancel]="true" [showConfirmButton]="false"></swal>
 
 <div class="container py-3">
 
@@ -33,7 +33,7 @@
                   [style.background-color]="data.vars.primary"
                   [style.color]="data.vars.text"
                   ngxClipboard
-                  (click)="copy.show()"
+                  (click)="copy.fire()"
                   [cbContent]="data | json">テーマコードをコピー</button>
         </div>
       </ng-template>

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {SwalComponent} from '@toverux/ngx-sweetalert2';
+import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {Router} from '@angular/router';
 
 @Component({
@@ -27,7 +27,7 @@ export class AddComponent implements OnInit {
     this.httpClient.post(environment.api + '/api/themes/add', body, options)
       .subscribe(
         () => {
-          this.addSuccess.show().then(() => {
+          this.addSuccess.fire().then(() => {
             this.router.navigate(['/theme/list']);
           });
         }
