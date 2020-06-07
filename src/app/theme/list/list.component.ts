@@ -11,6 +11,7 @@ import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 export class ListComponent implements OnInit {
   @ViewChild('copy', { static: true }) private copy: SwalComponent;
   list = [];
+  selectVersion = 11;
   constructor(
     private httpClient: HttpClient
   ) { }
@@ -19,7 +20,11 @@ export class ListComponent implements OnInit {
     this.httpClient.get<any[]>(environment.api + '/api/themes/list')
       .subscribe(data => {
         data.forEach(a => {
-          this.list.push(JSON.parse(a.theme));
+          this.list.push({
+            id: a.id,
+            theme: JSON.parse(a.theme),
+            version: a.version
+          });
         });
       });
   }

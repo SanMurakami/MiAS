@@ -7,35 +7,80 @@
   </section>
 
   <section class="section">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-light" [class.active]="selectVersion == 11" (click)="selectVersion = 11">v11</label>
+      <label class="btn btn-light" [class.active]="selectVersion == 12" (click)="selectVersion = 12">v12</label>
+    </div>
+
     <div class="theme-previews row">
-      <ng-template ngFor let-data [ngForOf]="list">
-        <div class="col-md-4 py-2">
-          <div class="col-12 theme-preview-post" [style.background-color]="data.vars.secondary">
-            <div class="mb-2 row">
-              <div class="col-3">
-                <div class="theme-preview-icon my-3" [style.background-color]="data.vars.primary"></div>
-              </div>
-              <div class="col-9">
-                <div class="mt-1" [style.color]="data.vars.primary">{{data.name}}</div>
-                <div class="theme-preview-body" [style.color]="data.vars.text">
-                  <ul class="list-unstyled">
-                    <li>テーマを作った人:</li>
-                    <li>{{data.author}}</li>
-                    <hr [style.border-color]="data.vars.text">
-                    <li>テーマの説明:</li>
-                    <li>{{data.desc}}</li>
-                  </ul>
+      <ng-template [ngIf]="selectVersion == 11">
+        <ng-template ngFor let-data [ngForOf]="list">
+          <ng-template [ngIf]="data?.version === 11">
+            <div class="col-md-4 py-2">
+              <div class="col-12 theme-preview-post" [style.background-color]="data?.theme.vars.secondary">
+                <div class="mb-2 row">
+                  <div class="col-3">
+                    <div class="theme-preview-icon my-3" [style.background-color]="data?.theme.vars.primary"></div>
+                  </div>
+                  <div class="col-9">
+                    <div class="mt-1" [style.color]="data?.theme.vars.primary">{{data?.theme.name}}</div>
+                    <div class="theme-preview-body" [style.color]="data?.theme.vars.text">
+                      <ul class="list-unstyled">
+                        <li>テーマを作った人:</li>
+                        <li>{{data?.theme.author}}</li>
+                        <hr [style.border-color]="data?.theme.vars.text">
+                        <li>テーマの説明:</li>
+                        <li>{{data?.theme.desc}}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <button class="btn btn-block"
+                      [style.background-color]="data?.theme.vars.primary"
+                      [style.color]="data?.theme.vars.text"
+                      ngxClipboard
+                      (click)="copy.fire()"
+                      [cbContent]="data?.theme | json">テーマコードをコピー
+              </button>
             </div>
-          </div>
-          <button class="btn btn-block"
-                  [style.background-color]="data.vars.primary"
-                  [style.color]="data.vars.text"
-                  ngxClipboard
-                  (click)="copy.fire()"
-                  [cbContent]="data | json">テーマコードをコピー</button>
-        </div>
+          </ng-template>
+        </ng-template>
+      </ng-template>
+
+      <ng-template [ngIf]="selectVersion == 12">
+        <ng-template ngFor let-data [ngForOf]="list">
+          <ng-template [ngIf]="data?.version === 12">
+            <div class="col-md-4 py-2">
+              <div class="col-12 theme-preview-post" [style.background-color]="data?.theme.props.panel">
+                <div class="mb-2 row">
+                  <div class="col-3">
+                    <div class="theme-preview-icon my-3" [style.background-color]="data?.theme.props.accent"></div>
+                  </div>
+                  <div class="col-9">
+                    <div class="mt-1" [style.color]="data?.theme.props.fg">{{data?.theme.name}}</div>
+                    <div class="theme-preview-body" [style.color]="data?.theme.props.fg">
+                      <ul class="list-unstyled">
+                        <li>テーマを作った人:</li>
+                        <li>{{data?.theme.author}}</li>
+                        <hr [style.border-color]="data?.theme.props.fg">
+                        <li>テーマの説明:</li>
+                        <li>{{data?.theme.desc}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-block"
+                      [style.background-color]="data?.theme.props.bg"
+                      [style.color]="data?.theme.props.fg"
+                      ngxClipboard
+                      (click)="copy.fire()"
+                      [cbContent]="data?.theme | json">テーマコードをコピー
+              </button>
+            </div>
+          </ng-template>
+        </ng-template>
       </ng-template>
     </div>
   </section>
