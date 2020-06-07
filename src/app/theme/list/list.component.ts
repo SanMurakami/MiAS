@@ -25,7 +25,6 @@ export class ListComponent implements OnInit {
             theme: JSON.parse(a.theme),
             version: a.version
           });
-          console.log(JSON.parse(a.theme));
         });
       });
   }

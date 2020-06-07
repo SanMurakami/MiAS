@@ -41,7 +41,7 @@
                       [style.color]="data?.theme.vars.text"
                       ngxClipboard
                       (click)="copy.fire()"
-                      [cbContent]="data | json">テーマコードをコピー
+                      [cbContent]="data?.theme | json">テーマコードをコピー
               </button>
             </div>
           </ng-template>
@@ -76,7 +76,7 @@
                       [style.color]="data?.theme.props.fg"
                       ngxClipboard
                       (click)="copy.fire()"
-                      [cbContent]="data | json">テーマコードをコピー
+                      [cbContent]="data?.theme | json">テーマコードをコピー
               </button>
             </div>
           </ng-template>

@@ -11,7 +11,9 @@ import {Router} from '@angular/router';
 })
 export class AddComponent implements OnInit {
   @ViewChild('addSuccess', { static: true }) private addSuccess: SwalComponent;
-  code: any;
+  @ViewChild('addError', { static: true }) private addError: SwalComponent;
+  code: string;
+  delkey: string;
   constructor(
     private httpClient: HttpClient,
     private router: Router
@@ -21,7 +23,12 @@ export class AddComponent implements OnInit {
   }
 
   submit() {
-    const body = 'theme=' + JSON.stringify(new Function('return ' + this.code)());
+    if (!this.isValidJson(this.code)) {
+      this.addError.fire();
+      return;
+    }
+
+    const body = 'theme=' + JSON.stringify(new Function('return ' + this.code)()) + '&delkey=' + this.delkey;
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const options = {headers: headers};
     this.httpClient.post(environment.api + '/api/themes/add', body, options)
@@ -30,9 +37,20 @@ export class AddComponent implements OnInit {
           this.addSuccess.fire().then(() => {
             this.router.navigate(['/theme/list']);
           });
+        }, error => {
+          this.addError.fire();
         }
       );
 
+  }
+
+  isValidJson(value) {
+    try {
+      JSON.parse(value);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 
 }
