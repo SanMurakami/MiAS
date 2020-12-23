@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "misskeyassetstore": {
+      "hosting": {
+        "mias": [
+          "misskeyassetstore"
+        ]
+      }
+    }
+  }
+}
