@@ -1,1 +1,13 @@
+<mat-toolbar color="primary" class="header">
+  <div>MiAS</div>
+  <span class="spacer"></span>
+  <ng-container *ngIf="user$ | async as user; else showLogin">
+    <button mat-raised-button (click)="logout()">Logout</button>
+  </ng-container>
+
+  <ng-template #showLogin>
+    <button mat-raised-button (click)="login()">Login</button>
+  </ng-template>
+</mat-toolbar>
+
 <router-outlet></router-outlet>
