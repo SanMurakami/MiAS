@@ -8,6 +8,8 @@ import {environment} from '../environments/environment';
 import {AngularFireAnalyticsModule} from '@angular/fire/analytics';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
