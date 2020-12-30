@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from './services/auth.service';
 
 @Component({
@@ -9,10 +9,13 @@ import {AuthService} from './services/auth.service';
 export class AppComponent {
   user$ = this.auth.user$;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService) {
+  }
+
   login(): void {
     this.auth.login();
   }
+
   logout(): void {
     this.auth.logout();
   }

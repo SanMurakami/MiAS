@@ -1,15 +1,15 @@
-<mat-toolbar color="primary" class="header">
+<mat-toolbar class="header" color="primary">
   <div>MiAS</div>
   <span class="spacer"></span>
   <ng-container *ngIf="user$ | async as user; else showLogin">
-    <img [matMenuTriggerFor]="menu" src="{{ user.photoURL }}" alt="" width="30px" />
+    <img [matMenuTriggerFor]="menu" alt="" src="{{ user.photoURL }}" width="30px"/>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()">Logout</button>
+      <button (click)="logout()" mat-menu-item>Logout</button>
     </mat-menu>
   </ng-container>
 
   <ng-template #showLogin>
-    <button mat-button (click)="login()">Login</button>
+    <button (click)="login()" mat-button>Login</button>
   </ng-template>
 </mat-toolbar>
 
