@@ -8,6 +8,12 @@ const routes: Routes = [
   }, {
     path: 'theme',
     loadChildren: () => import('./pages/theme/theme.module').then(m => m.ThemeModule)
+  }, {
+    path: '404',
+    loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule)
+  }, {
+    path: '**',
+    redirectTo: '/404'
   }
 ];
 
