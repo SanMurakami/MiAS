@@ -13,11 +13,7 @@ export class AuthService {
   }
 
   login(): void {
-    this.afAuth
-      .signInWithPopup(new auth.GoogleAuthProvider())
-      .then((result) => {
-        console.log(result);
-      });
+    this.afAuth.signInWithPopup(new auth.GoogleAuthProvider())
   }
 
   logout(): void {
