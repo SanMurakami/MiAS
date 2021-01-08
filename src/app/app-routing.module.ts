@@ -9,6 +9,9 @@ const routes: Routes = [
     path: 'theme',
     loadChildren: () => import('./pages/theme/theme.module').then(m => m.ThemeModule)
   }, {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule)
+  }, {
     path: '404',
     loadChildren: () => import('./pages/notfound/notfound.module').then(m => m.NotfoundModule)
   }, {
