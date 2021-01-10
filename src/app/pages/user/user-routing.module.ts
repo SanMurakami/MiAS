@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: ':id',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
-  }, {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
   }, {
-    path: '**',
-    redirectTo: '/404'
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+  }, {
+    path: '',
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
   }
 ];
 
