@@ -20,23 +20,23 @@ export class ThemeService {
       theme,
       id
     };
-    this.afs.collection<Theme>('theme').doc(id).set(params).then(() => {
+    this.afs.collection<Theme>('themes').doc(id).set(params).then(() => {
       process = true;
     });
     return process;
   }
 
   getTheme(): Observable<Theme[]> {
-    return this.afs.collection<Theme>('theme').valueChanges();
+    return this.afs.collection<Theme>('themes').valueChanges();
   }
 
   getUserTheme(uid: string): Observable<Theme[]> {
-    return this.afs.collection<Theme>('theme', ref => ref.where('uid', '==', uid)).valueChanges();
+    return this.afs.collection<Theme>('themes', ref => ref.where('uid', '==', uid)).valueChanges();
   }
 
   deleteTheme(id: string, uid: string): boolean {
     let process = false;
-    this.afs.collection<Theme>('theme', ref => ref
+    this.afs.collection<Theme>('themes', ref => ref
       .where('uid', '==', uid)
       .where('id', '==', id)
     ).valueChanges().subscribe(result => {
@@ -44,7 +44,7 @@ export class ThemeService {
         return;
       }
 
-      this.afs.collection('theme').doc(id).delete().then(() => {
+      this.afs.collection('themes').doc(id).delete().then(() => {
         process = true;
       });
     });
