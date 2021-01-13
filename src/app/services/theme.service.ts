@@ -2,16 +2,23 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Theme} from '../pages/theme/index/index.component';
 import {Observable} from 'rxjs';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(
+    private afs: AngularFirestore,
+    private auth: AuthService
+  ) { }
 
   addTheme(uid: string, theme: string, themeName: string, themeDesc: string): boolean {
     let process = false;
+    if (!this.auth.user$) {
+      return false;
+    }
     const id = this.afs.createId();
     const params: { uid: string; themeName: string; theme: string; themeDesc: string; id: string } = {
       uid,
