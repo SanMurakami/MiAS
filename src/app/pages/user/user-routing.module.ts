@@ -9,7 +9,8 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard]
   }, {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule),
+    canActivate: [AngularFireAuthGuard]
   }, {
     path: '',
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
