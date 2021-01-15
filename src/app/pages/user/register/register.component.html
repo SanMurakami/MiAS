@@ -1,1 +1,19 @@
-<p>register works!</p>
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="mat-elevation-z12" style="margin-top: 2rem">
+    <h2>Register</h2>
+    <p style="color: red">Warning: Once a user name is set, it cannot be changed.</p>
+    <mat-form-field appearance="fill">
+      <mat-label>username</mat-label>
+      <input matInput type="text" [formControl]="registerFormControl" maxlength="16" minlength="1" required>
+      <span matPrefix>@&nbsp;</span>
+    </mat-form-field>
+    <button mat-raised-button
+            color="primary"
+            style="margin-left: 16px"
+            (click)="register()"
+            [disabled]="!registerFormControl.valid">OK
+    </button>
+    <mat-error *ngIf="registerFormControl.hasError('pattern')">Only single-byte alphanumeric characters are accepted.</mat-error>
+    <mat-error *ngIf="registerFormControl.hasError('required')">Username is required.</mat-error>
+  </mat-card>
+</div>

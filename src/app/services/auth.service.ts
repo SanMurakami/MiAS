@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import auth = firebase.auth;
 
 export interface User {
-  uid: string;
+  uid: string | undefined;
   name: string;
 }
 
