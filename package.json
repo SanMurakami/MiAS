@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~11.1.0",
     "@angular/platform-browser-dynamic": "~11.1.0",
     "@angular/router": "~11.1.0",
+    "@ngstack/code-editor": "^2.1.1",
     "firebase": "^7.0.0 || ^8.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
