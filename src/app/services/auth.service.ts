@@ -8,6 +8,7 @@ import auth = firebase.auth;
 export interface User {
   uid: string | undefined;
   name: string;
+  photo: string | null | undefined;
 }
 
 @Injectable({

@@ -24,22 +24,23 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.user$.subscribe(data => {
-      this.afs.collection<User>('users', ref => ref.where('uid', '==', data?.uid))
+      const userSubscription = this.afs.collection<User>('users', ref => ref.where('uid', '==', data?.uid))
         .valueChanges()
         .subscribe(result => {
           if (result.length !== 0) {
             this.router.navigate(['/']);
           }
+          userSubscription.unsubscribe();
         });
     });
   }
 
   register(): void {
-
     this.auth.user$.subscribe(data => {
       const params: User = {
         uid: data?.uid,
-        name: this.registerFormControl.value
+        name: this.registerFormControl.value,
+        photo: data?.photoURL
       };
       this.afs.collection<User>('users').doc(data?.uid).set(params);
     });
