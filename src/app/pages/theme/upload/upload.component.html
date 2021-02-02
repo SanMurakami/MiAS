@@ -1,1 +1,19 @@
-<p>upload works!</p>
+<div class="container" fxLayout="row" fxLayoutAlign="center">
+  <mat-card class="mat-elevation-z12" fxFlex="60" style="margin-top: 2rem; width: 100%">
+    <h2>Theme upload</h2>
+    <div>
+      <mat-form-field fxFlex="100" appearance="fill">
+        <mat-label>Theme code</mat-label>
+        <textarea matInput [formControl]="themeFormControl" maxlength="16384" minlength="10"
+                  required></textarea>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button
+            color="primary"
+            (click)="upload()"
+            [disabled]="!themeFormControl.valid">OK
+    </button>
+    <mat-error *ngIf="themeFormControl.hasError('required')">Theme code is required.</mat-error>
+    <mat-error *ngIf="themeValidate === false">The theme format is not correct.</mat-error>
+  </mat-card>
+</div>
