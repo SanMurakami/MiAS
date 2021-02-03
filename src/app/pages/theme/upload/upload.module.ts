@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [UploadComponent],
@@ -22,6 +23,7 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
   ]
 })
 export class UploadModule { }
