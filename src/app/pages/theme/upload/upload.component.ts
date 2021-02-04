@@ -52,10 +52,11 @@ export class UploadComponent implements OnInit {
     try {
       const theme = this.themeFormControl.value as string;
       const parsedTheme = json5.parse(theme);
+      const themeString = json5.stringify(parsedTheme);
+      const encoder = new TextEncoder();
+      const buf = await crypto.subtle.digest('SHA-256', encoder.encode(themeString));
+      const themeHash = [].map.call(new Uint8Array(buf), (b: number) => b.toString(16).padStart(2, '0')).join('');
       this.themeValidate = 0;
-      const buff = new Uint8Array(theme.split('').map((c: string) => c.charCodeAt(0))).buffer;
-      const digest = await crypto.subtle.digest('SHA-256', buff);
-      const themeHash = [].map.call(new Uint8Array(digest), (x: number) => ('00' + x.toString(16)).slice(-2)).join('');
 
       const result = await this.afs.collection<Theme>('themes', ref => ref.where('hash', '==', themeHash)).get().toPromise();
       if (result.size !== 0) {
@@ -65,16 +66,14 @@ export class UploadComponent implements OnInit {
 
       const params: Theme = {
         uid: this.uid,
-        theme,
+        theme: themeString,
         hash: themeHash,
         date: new Date().getTime(),
         name: parsedTheme.name,
-        desc: parsedTheme.desc,
         base: parsedTheme.base
       };
       await this.afs.collection<Theme>('themes').doc(themeHash).set(params);
-      // https://theme-screenshot.misskey.io
-      const body = 'theme=' + theme;
+      const body = 'theme=' + themeString;
       const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       const options = {headers};
       this.httpClient.post<ThemeScreenshot>('https://theme-screenshot.misskey.io', body, options).subscribe(
@@ -83,6 +82,7 @@ export class UploadComponent implements OnInit {
         }
       );
     } catch (e) {
+      console.log(e);
       this.themeValidate = 1;
     }
   }
