@@ -1,25 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemeService} from '../../../services/theme.service';
 import {AuthService} from '../../../services/auth.service';
 import {FormControl, Validators} from '@angular/forms';
 import * as json5 from 'json5';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
-export interface Theme {
-  uid: string | undefined;
-  theme: string;
-  hash: string;
-  date: number;
-  name: string;
-  desc: string;
-  base: string;
-}
-
-export interface ThemeScreenshot {
-  home: string;
-  note: string;
-}
+import {Theme, ThemeScreenshot} from '../../../services/theme.service';
 
 @Component({
   selector: 'app-upload',
