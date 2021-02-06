@@ -20,10 +20,9 @@ export class UploadComponent implements OnInit {
   ]);
 
   constructor(
-    private theme: ThemeService,
     private auth: AuthService,
     private afs: AngularFirestore,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {
   }
 
@@ -35,20 +34,28 @@ export class UploadComponent implements OnInit {
 
   async upload(): Promise<void> {
     try {
+      // フォームに入力されたテーマを取得
       const theme = this.themeFormControl.value as string;
+      // テーマをパースする（パース出来なければエラーになる）
       const parsedTheme = json5.parse(theme);
+      // JSON5でパースしたデータを文字列に戻す
       const themeString = json5.stringify(parsedTheme);
+      // テーマのハッシュを計算
       const encoder = new TextEncoder();
       const buf = await crypto.subtle.digest('SHA-256', encoder.encode(themeString));
       const themeHash = [].map.call(new Uint8Array(buf), (b: number) => b.toString(16).padStart(2, '0')).join('');
+      // 上記処理通過後エラー表示を消す
       this.themeValidate = 0;
 
+      // Firestoreから同じハッシュのテーマを検索
       const result = await this.afs.collection<Theme>('themes', ref => ref.where('hash', '==', themeHash)).get().toPromise();
+      // 同じハッシュのテーマが存在する場合はエラーを出す
       if (result.size !== 0) {
         this.themeValidate = 2;
         return;
       }
 
+      // Firestoreに保存するためのデータ
       const params: Theme = {
         uid: this.uid,
         theme: themeString,
@@ -57,17 +64,20 @@ export class UploadComponent implements OnInit {
         name: parsedTheme.name,
         base: parsedTheme.base
       };
+      // Firestoreに保存
       await this.afs.collection<Theme>('themes').doc(themeHash).set(params);
+      // スクリーンショットAPI用リクエストパラメータ
       const body = 'theme=' + themeString;
       const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       const options = {headers};
       this.httpClient.post<ThemeScreenshot>('https://theme-screenshot.misskey.io', body, options).subscribe(
         (res: ThemeScreenshot) => {
+          // todo: スクリーンショットが帰ってきたらダイアログを出したり・・・
           console.log(res);
         }
       );
     } catch (e) {
-      console.log(e);
+      // テーマ形式が正しくない場合
       this.themeValidate = 1;
     }
   }
