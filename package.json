@@ -27,6 +27,7 @@
     "firebase": "^7.0.0 || ^8.0.0",
     "json5": "2.2",
     "ngx-clipboard": "^14.0.1",
+    "ngx-img-zoom": "^4.1.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
