@@ -5,6 +5,7 @@ import * as json5 from 'json5';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Theme, ThemeScreenshot} from '../../../services/theme.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-upload',
@@ -23,6 +24,7 @@ export class UploadComponent implements OnInit {
     private auth: AuthService,
     private afs: AngularFirestore,
     private httpClient: HttpClient,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -79,7 +81,22 @@ export class UploadComponent implements OnInit {
     } catch (e) {
       // テーマ形式が正しくない場合
       this.themeValidate = 1;
-    }
+
+
+// アップロード成功時ダイアログ
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'success-dialog',
+  template: `<h1 mat-dialog-title>Success</h1>
+  <div mat-dialog-content>This theme has been uploaded successfully!</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close routerLink="/theme/list">OK</button>
+  </div>`
+})
+export class SuccessDialogComponent {
+  constructor() {
+  }
+}
   }
 
 }

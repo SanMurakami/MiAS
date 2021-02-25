@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [UploadComponent],
+    SuccessDialogComponent,
   imports: [
     CommonModule,
     UploadRoutingModule,
@@ -21,6 +22,7 @@ import {HttpClientModule} from '@angular/common/http';
     MatFormFieldModule,
     MatCardModule,
     MatInputModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
