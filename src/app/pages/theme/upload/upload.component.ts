@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../services/auth.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {AuthService, User} from '../../../services/auth.service';
 import {FormControl, Validators} from '@angular/forms';
 import * as json5 from 'json5';
 import {AngularFirestore} from '@angular/fire/firestore';
@@ -54,6 +54,7 @@ export class UploadComponent implements OnInit {
       // 同じハッシュのテーマが存在する場合はエラーを出す
       if (result.size !== 0) {
         this.themeValidate = 2;
+        this.dialog.open(ErrorDialogComponent, {data: {error: 2}});
         return;
       }
 
@@ -97,6 +98,29 @@ export class SuccessDialogComponent {
   constructor() {
   }
 }
-  }
 
+
+
+// アップロードエラー時ダイアログ
+interface DialogData {
+  error: number;
+}
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'error-dialog',
+  template:
+    `<h1 mat-dialog-title>Error</h1>
+    <div mat-dialog-content *ngIf="data.error === 1">The theme format is not correct.</div>
+    <div mat-dialog-content *ngIf="data.error === 2">This theme has already been registered.</div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>OK</button>
+    </div>`
+})
+export class ErrorDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ErrorDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
+  }
 }
