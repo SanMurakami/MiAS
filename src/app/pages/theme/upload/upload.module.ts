@@ -11,9 +11,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
+    UploadComponent,
     SuccessDialogComponent,
     ErrorDialogComponent
   ],
@@ -26,6 +28,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatCardModule,
     MatInputModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
