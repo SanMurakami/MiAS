@@ -14,7 +14,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 })
 export class UploadComponent implements OnInit {
   uid: string | undefined;
-  themeValidate = 0;
+  progress = false;
 
   themeFormControl = new FormControl('', [
     Validators.required
@@ -35,6 +35,7 @@ export class UploadComponent implements OnInit {
   }
 
   async upload(): Promise<void> {
+    this.progress = true;
     try {
       // フォームに入力されたテーマを取得
       const theme = this.themeFormControl.value as string;
@@ -46,27 +47,26 @@ export class UploadComponent implements OnInit {
       const encoder = new TextEncoder();
       const buf = await crypto.subtle.digest('SHA-256', encoder.encode(themeString));
       const themeHash = [].map.call(new Uint8Array(buf), (b: number) => b.toString(16).padStart(2, '0')).join('');
-      // 上記処理通過後エラー表示を消す
-      this.themeValidate = 0;
 
       // Firestoreから同じハッシュのテーマを検索
       const result = await this.afs.collection<Theme>('themes', ref => ref.where('hash', '==', themeHash)).get().toPromise();
       // 同じハッシュのテーマが存在する場合はエラーを出す
       if (result.size !== 0) {
-        this.themeValidate = 2;
+        this.progress = false;
         this.dialog.open(ErrorDialogComponent, {data: {error: 2}});
         return;
       }
 
       // Firestoreに保存するためのデータ
-      const params: Theme = {
-        uid: this.uid,
+      const params = {
+        user: this.uid,
+        username: (await this.afs.doc<User>('/users/' + this.uid).get().toPromise()).data()?.name,
         theme: themeString,
         hash: themeHash,
         date: new Date().getTime(),
         name: parsedTheme.name,
         base: parsedTheme.base
-      };
+      } as Theme;
       // Firestoreに保存
       await this.afs.collection<Theme>('themes').doc(themeHash).set(params);
       // スクリーンショットAPI用リクエストパラメータ
@@ -75,13 +75,20 @@ export class UploadComponent implements OnInit {
       const options = {headers};
       this.httpClient.post<ThemeScreenshot>('https://theme-screenshot.misskey.io', body, options).subscribe(
         (res: ThemeScreenshot) => {
-          // todo: スクリーンショットが帰ってきたらダイアログを出したり・・・
-          console.log(res);
+          this.dialog.open(SuccessDialogComponent);
+          this.progress = false;
         }
       );
     } catch (e) {
       // テーマ形式が正しくない場合
-      this.themeValidate = 1;
+      console.log(e);
+      this.dialog.open(ErrorDialogComponent, {data: {error: 1}});
+      this.progress = false;
+    }
+  }
+
+}
+
 
 
 // アップロード成功時ダイアログ

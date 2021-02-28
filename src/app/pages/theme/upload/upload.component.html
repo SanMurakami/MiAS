@@ -11,11 +11,10 @@
     <button mat-raised-button
             color="primary"
             (click)="upload()"
-            [disabled]="!themeFormControl.valid">OK
+            *ngIf="!progress"
+            [disabled]="!themeFormControl.valid">Upload
     </button>
     <mat-spinner *ngIf="progress" [diameter]="32"></mat-spinner>
     <mat-error *ngIf="themeFormControl.hasError('required')">Theme code is required.</mat-error>
-    <mat-error *ngIf="themeValidate === 1">The theme format is not correct.</mat-error>
-    <mat-error *ngIf="themeValidate === 2">This theme has already been registered.</mat-error>
   </mat-card>
 </div>
