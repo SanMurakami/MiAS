@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 
 export interface Theme {
-  uid: string | undefined;
+  user: string;
+  username: string;
   theme: string;
   hash: string;
   date: number;
