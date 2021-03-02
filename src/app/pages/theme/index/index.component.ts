@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface Theme {
-  uid: string;
-  themeName: string;
-  themeDesc: string;
-  theme: string;
-  id: string;
-}
+import {Theme} from '../../../services/theme.service';
 
 @Component({
   selector: 'app-index',
@@ -14,6 +7,7 @@ export interface Theme {
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+  themes: Theme[] = [];
 
   constructor() { }
 
