@@ -43,6 +43,7 @@ export class RegisterComponent implements OnInit {
         photo: data?.photoURL
       };
       this.afs.collection<User>('users').doc(data?.uid).set(params);
+      this.router.navigate(['/']);
     });
   }
 
