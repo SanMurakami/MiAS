@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService, User} from '../../../services/auth.service';
+import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {Theme} from '../../../services/theme.service';
 
 @Component({
@@ -9,9 +11,22 @@ import {Theme} from '../../../services/theme.service';
 export class IndexComponent implements OnInit {
   themes: Theme[] = [];
 
-  constructor() { }
+  constructor(
+    private auth: AuthService,
+    private afs: AngularFirestore,
+  ) { }
 
   ngOnInit(): void {
+    this.afs.collection<Theme>('themes').get().subscribe(result => {
+      result.forEach(doc => {
+        this.themes.push(doc.data());
+      });
+    });
   }
 
+  getUser(user: DocumentReference): void {
+    user.get().then(data => {
+      console.log(data.data());
+    });
+  }
 }

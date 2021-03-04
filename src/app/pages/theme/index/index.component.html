@@ -1,1 +1,14 @@
-<p>theme index works!</p>
+<div class="container" fxLayout="row warp" fxLayoutAlign="center" fxLayoutGap="10px">
+  <ng-template [ngForOf]="themes" let-data ngFor>
+    <mat-card [class.dark]="data?.base === 'dark'" class="mat-elevation-z8" fxFlex="20" fxFlex.md="30" fxFlex.sm="45" fxFlex.xs="100">
+      <img mat-card-image src="https://mias-storage.misskey.io/theme-screenshot/note-{{data?.hash}}.png">
+      <mat-card-content>
+        <mat-card-title>{{data?.name}}</mat-card-title>
+        <p>@{{data?.username}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button mat-stroked-button>Copy</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-template>
+</div>
