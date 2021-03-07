@@ -1,6 +1,9 @@
 <mat-toolbar class="header" color="primary">
   <div>MiAS</div>
   <span class="spacer"></span>
+  <button routerLink="/theme/list" mat-button>Theme List</button>
+  <button routerLink="/theme/upload" *ngIf="user$ | async as user" mat-button>Theme Upload</button>
+  <span class="spacer"></span>
   <ng-container *ngIf="user$ | async as user; else showLogin">
     <img [matMenuTriggerFor]="menu" alt="" src="{{ user.photoURL }}" width="30px"/>
     <mat-menu #menu="matMenu">
