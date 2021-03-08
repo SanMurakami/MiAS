@@ -7,7 +7,7 @@
         <p>@{{data?.username}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button mat-stroked-button>Copy</button>
+        <button mat-button mat-stroked-button ngxClipboard [cbContent]="data?.theme" (click)="copySnackBar()">Copy</button>
       </mat-card-actions>
     </mat-card>
   </ng-template>

@@ -8,6 +8,8 @@ import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxImgZoomModule} from 'ngx-img-zoom';
+import {ClipboardModule} from 'ngx-clipboard';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import {NgxImgZoomModule} from 'ngx-img-zoom';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
+    MatSnackBarModule,
     NgxImgZoomModule,
+    ClipboardModule,
   ]
 })
 export class IndexModule { }
