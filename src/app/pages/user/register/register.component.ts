@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
 
   registerFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('^[0-9a-zA-Z]*$')
+    Validators.pattern('[a-zA-Z0-9\-\@\_\.]+')
   ]);
 
   constructor(
