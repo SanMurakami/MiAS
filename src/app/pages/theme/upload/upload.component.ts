@@ -6,6 +6,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Theme, ThemeScreenshot} from '../../../services/theme.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -25,12 +26,21 @@ export class UploadComponent implements OnInit {
     private afs: AngularFirestore,
     private httpClient: HttpClient,
     private dialog: MatDialog,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
     this.auth.user$.subscribe(data => {
       this.uid = data?.uid;
+      const userSubscription = this.afs.collection<User>('users', ref => ref.where('uid', '==', this.uid))
+        .valueChanges()
+        .subscribe(result => {
+          if (result.length !== 1) {
+            this.router.navigate(['/user/register']);
+          }
+          userSubscription.unsubscribe();
+        });
     });
   }
 
