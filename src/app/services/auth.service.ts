@@ -26,12 +26,13 @@ export class AuthService {
 
   login(): void {
     this.afAuth.signInWithPopup(new auth.GoogleAuthProvider()).then(data => {
-      this.afs.collection<User>('users', ref => ref.where('uid', '==', data.user?.uid))
+      const userSubscription = this.afs.collection<User>('users', ref => ref.where('uid', '==', data.user?.uid))
         .valueChanges()
         .subscribe(result => {
           if (result.length !== 1) {
             this.router.navigate(['/user/register']);
           }
+          userSubscription.unsubscribe();
         });
     });
   }
