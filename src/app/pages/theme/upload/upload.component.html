@@ -14,7 +14,10 @@
             *ngIf="!progress"
             [disabled]="!themeFormControl.valid">Upload
     </button>
-    <mat-spinner *ngIf="progress" [diameter]="32"></mat-spinner>
+    <ng-template [ngIf]="progress">
+      <mat-spinner [diameter]="32"></mat-spinner>
+      <p>{{count > 0 ? 'Taking screenshots, please wait ' + count + 's' : 'Please wait...'}}</p>
+    </ng-template>
     <mat-error *ngIf="themeFormControl.hasError('required')">Theme code is required.</mat-error>
   </mat-card>
 </div>

@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 export class UploadComponent implements OnInit {
   uid: string | undefined;
   progress = false;
+  count = 30;
 
   themeFormControl = new FormControl('', [
     Validators.required
@@ -46,6 +47,9 @@ export class UploadComponent implements OnInit {
 
   async upload(): Promise<void> {
     this.progress = true;
+    const countdown = setInterval(() => {
+      this.count--;
+    }, 1000);
     try {
       // フォームに入力されたテーマを取得
       const theme = this.themeFormControl.value as string;
@@ -64,6 +68,8 @@ export class UploadComponent implements OnInit {
       if (result.size !== 0) {
         this.progress = false;
         this.dialog.open(ErrorDialogComponent, {data: {error: 2}});
+        clearInterval(countdown);
+        this.count = 30;
         return;
       }
 
@@ -94,6 +100,8 @@ export class UploadComponent implements OnInit {
       console.log(e);
       this.dialog.open(ErrorDialogComponent, {data: {error: 1}});
       this.progress = false;
+      clearInterval(countdown);
+      this.count = 30;
     }
   }
 
