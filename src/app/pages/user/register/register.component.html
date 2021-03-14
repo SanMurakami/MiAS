@@ -15,5 +15,6 @@
     </button>
     <mat-error *ngIf="registerFormControl.hasError('pattern')">Only single-byte alphanumeric characters are accepted.</mat-error>
     <mat-error *ngIf="registerFormControl.hasError('required')">Username is required.</mat-error>
+    <mat-error *ngIf="already">Username is already in use.</mat-error>
   </mat-card>
 </div>

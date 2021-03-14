@@ -10,6 +10,7 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  already = false;
 
   registerFormControl = new FormControl('', [
     Validators.required,
@@ -36,15 +37,25 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    this.auth.user$.subscribe(data => {
-      const params: User = {
-        uid: data?.uid,
-        name: this.registerFormControl.value,
-        photo: data?.photoURL
-      };
-      this.afs.collection<User>('users').doc(data?.uid).set(params);
-      this.router.navigate(['/']);
-    });
+    const userSubscription = this.afs.collection<User>('users', ref => ref.where('name', '==', this.registerFormControl.value))
+      .valueChanges()
+      .subscribe(result => {
+        if (result.length === 0) {
+          this.already = false;
+          this.auth.user$.subscribe(data => {
+            const params: User = {
+              uid: data?.uid,
+              name: this.registerFormControl.value,
+              photo: data?.photoURL
+            };
+            this.afs.collection<User>('users').doc(data?.uid).set(params);
+            this.router.navigate(['/']);
+          });
+        } else {
+          this.already = true;
+        }
+        userSubscription.unsubscribe();
+      });
   }
 
 }
